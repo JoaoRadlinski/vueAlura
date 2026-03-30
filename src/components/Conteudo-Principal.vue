@@ -1,30 +1,31 @@
 <template>
-    <main class="conteudo-principal">
-        <section>
-            <span class="subtitulo-lg sua-lista-texto">Sua Lista de Receitas:</span>
+  <main class="conteudo-principal">
+    <section>
+      <span class="subtitulo-lg sua-lista-texto">Sua Lista de Receitas:</span>
 
-            <ul v-if="ingredientes.length !== 0" class="ingredientes-sua-lista">
-                <li v-for="ingrediente in ingredientes" :key="ingrediente" class="ingrediente">
-                    {{ ingrediente }}
-                </li>
-            </ul>
+      <ul v-if="ingredientes.length !== 0" class="ingredientes-sua-lista">
+        <li v-for="ingrediente in ingredientes" :key="ingrediente" class="ingrediente">
+          {{ ingrediente }}
+        </li>
+      </ul>
 
-            <p v-else class="paragrafo lista-vazia"><img src="../assets/images/icones/lista-vazia.svg" alt="">Sua lista está vazia. adicione ingredientes à sua lista.</p>
-        </section>
+      <p v-else class="paragrafo lista-vazia"><img src="../assets/images/icones/lista-vazia.svg" alt="">Sua lista está
+        vazia. adicione ingredientes à sua lista.</p>
+    </section>
 
-        <selecionaringredientes />
-    </main>
+    <Selecionaringredientes />
+  </main>
 </template>
 
 <script lang="ts">
 import Selecionaringredientes from './Selecionaringredientes.vue'
 export default {
   components: { Selecionaringredientes },
-    data() {
-        return {
-            ingredientes: ['Arroz', 'Feijão', 'Macarrão']
-        }
+  data() {
+    return {
+      ingredientes: ['Arroz', 'Feijão', 'Macarrão']
     }
+  }
 }
 </script>
 
@@ -61,8 +62,8 @@ export default {
   min-width: 4.25rem;
   padding: 0.5rem;
   text-align: center;
-    transition: 0.2s;
-    color: var(--creme, #FFFAF3);
+  transition: 0.2s;
+  color: var(--creme, #FFFAF3);
   background: var(--coral, #F0633C);
   font-weight: 700;
 }
@@ -91,5 +92,4 @@ export default {
     gap: 4rem;
   }
 }
-
 </style>
