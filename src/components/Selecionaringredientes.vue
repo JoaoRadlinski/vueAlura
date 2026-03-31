@@ -1,5 +1,5 @@
 <script lang="ts">
-import type ICategorias from '@/interfaces/ICategorias';
+import type ICategorias from '../interfaces/ICategorias';
 import { obterCategorias } from '../http/index';
 import CardCategoria from './CardCategoria.vue';
 
@@ -26,7 +26,7 @@ export default {
 
         <ul class="categorias">
             <li v-for="categoria in categorias" :key="categoria.nome">
-                <CardCategoria :categoria="categoria" />
+                <CardCategoria :categoria="categoria"  />
             </li>
         </ul>
 
