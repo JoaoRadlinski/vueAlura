@@ -1,37 +1,41 @@
-<script lang="ts">
+<script setup lang="ts">
 import type ICategorias from '../interfaces/ICategorias';
 import { obterCategorias } from '../http/index';
 import CardCategoria from './CardCategoria.vue';
+import { onMounted, ref } from 'vue';
 
-export default {
-    components: { CardCategoria },
-    data() {
-        return {
-            categorias: [] as ICategorias[]
-        }
-    },
-     async created() {
-         this.categorias = await obterCategorias();
-     },
-    }   
+const categorias = ref([] as ICategorias[])
 
+onMounted(async () => {
+    categorias.value = await obterCategorias();
+})
+defineEmits(['adicionar-ingrediente', 'remover-ingrediente'])
 
 </script>
 
 <template>
     <section class="selecionar-ingredientes">
-        <h1 class="cabecalho titulo ingredientes">Ingredientes</h1>
+        <h1 class="cabecalho titulo-ingredientes">Ingredientes</h1>
         <p class="paragrafo-lg instrucoes">Selecione os ingredientes que você tem em casa para descobrir novas receitas.
         </p>
 
         <ul class="categorias">
             <li v-for="categoria in categorias" :key="categoria.nome">
-                <CardCategoria :categoria="categoria"  />
+                <CardCategoria :categoria="categoria" @adicionar-ingrediente="$emit('adicionar-ingrediente', $event)"
+                    @remover-ingrediente="$emit('remover-ingrediente', $event)" />
             </li>
         </ul>
 
         <p class="paragrafo dica">Atencao: consideramos apenas os ingredientes que você selecionar.</p>
+
+
+        <p class="paragrafo dica">
+            *Atenção: consideramos que você tem em casa sal, pimenta e água.
+        </p>
+
+        <BotaoPrincipal texto="Buscar receitas!" />
     </section>
+
 </template>
 
 <style scoped>

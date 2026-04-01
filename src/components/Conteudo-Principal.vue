@@ -13,21 +13,37 @@
         vazia. adicione ingredientes à sua lista.</p>
     </section>
 
-    <Selecionaringredientes />
+    <Selecionaringredientes v-if="conteudo === 'Selecionaringredientes'"
+      @adicionar-ingrediente="adicionarIngrediente"
+      @remover-ingrediente="removerIngrediente"
+    />
+
+    <MostrarReceitas v-else-if="conteudo === 'MostrarReceitas'" />
+
+
+    
   </main>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
+import BotaoPrincipal from './BotaoPrincipal.vue';
+import MostrarReceitas from './MostrarReceitas.vue';
 import Selecionaringredientes from './Selecionaringredientes.vue'
 import Tag from './Tag.vue';
-export default {
-  components: { Selecionaringredientes, Tag },
-  data() {
-    return {
-      ingredientes: ['Arroz', 'Feijão', 'Macarrão']
-    }
-  }
+import { ref } from 'vue';
+type Pagina = 'Selecionaringredientes' | 'MostrarReceitas';
+const ingredientes = ref<string[]>([])
+const conteudo = ref<Pagina>('Selecionaringredientes');
+
+
+function adicionarIngrediente(ingrediente: string) {
+  ingredientes.value.push(ingrediente)
 }
+
+function removerIngrediente(ingrediente: string) {
+  ingredientes.value = ingredientes.value.filter(i => i !== ingrediente)
+}
+
 </script>
 
 <style scoped>

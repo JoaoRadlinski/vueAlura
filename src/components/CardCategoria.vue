@@ -1,30 +1,29 @@
-<script lang="ts">
+<script setup lang="ts">
 import type ICategorias from '../interfaces/ICategorias';
-import type { PropType } from 'vue';
-import Tag from './Tag.vue';
 import IngredienteSelecionado from './IngredienteSelecionado.vue';
-export default {
-    props: {
-        categoria: {
-            type: Object as PropType<ICategorias>,
-            required: true
-        }
-    },
-    components: { IngredienteSelecionado, Tag},
-}
+defineProps<{
+    categoria: ICategorias
+}>()
+defineEmits(['adicionar-ingrediente', 'remover-ingrediente'])
+
+
 </script>
 
 <template>
     <article class="categoria">
-        <header class="categoria_cabecalho">
-            <img :src="`/imagens/icones/categorias_ingredientes/${categoria.imagem}`" alt="" class="categoria_imagem">
+        <header class="categoria__cabecalho">
+            <img :src="`/imagens/icones/categorias_ingredientes/${categoria.imagem}`" alt="" class="categoria__imagem">
 
-            <h2 class="paragrafo-lg categoria__nome">{{ categoria.nome }}</h2>
+            <h2 class="paragrafo-lg categoria__nome">{{ categoria.nome || 'Categoria' }}</h2>
         </header>
 
         <ul class="categoria__ingredientes">
             <li v-for="ingrediente in categoria.ingredientes" :key="ingrediente">
-                <IngredienteSelecionado :ingrediente="ingrediente" />
+                <IngredienteSelecionado 
+                    :ingrediente="ingrediente" 
+                    @adicionar-ingrediente="$emit('adicionar-ingrediente', $event)"
+                    @remover-ingrediente="$emit('remover-ingrediente', $event)"
+                />
             </li>
         </ul>
 
